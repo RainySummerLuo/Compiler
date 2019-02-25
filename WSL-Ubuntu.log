@@ -1,0 +1,390 @@
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ cat test.c
+#include <stdio.h>
+
+int main(void){
+    int add1 = 0;
+    printf("Hello, World!\n");
+    add1 = 1 + 2;
+    printf("1 + 2 = %d\n", add1);
+    return 0;
+}
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file test.c
+test.c: C source, ASCII text
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ gcc -o test.i -E test.c
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+total 20
+-rwxrwxrwx 1 rainy rainy    23 Feb 25 16:15 README.md
+-rwxrwxrwx 1 rainy rainy   149 Feb 25 16:17 test.c
+-rwxrwxrwx 1 rainy rainy 18006 Feb 25 16:38 test.i
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file test.i
+test.i: C source, ASCII text
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ cat test.i
+[...]
+# 868 "/usr/include/stdio.h" 3 4
+
+# 2 "test.c" 2
+
+
+# 3 "test.c"
+int main(void){
+    int add1 = 0;
+    printf("Hello, World!");
+    add1 = 1 + 2;
+    prtinf("1 + 2 = %d", add1);
+    return 0;
+}
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ gcc -S test.i
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+total 20
+-rwxrwxrwx 1 rainy rainy    23 Feb 25 16:15 README.md
+-rwxrwxrwx 1 rainy rainy   149 Feb 25 16:39 test.c
+-rwxrwxrwx 1 rainy rainy 18006 Feb 25 16:39 test.i
+-rwxrwxrwx 1 rainy rainy   650 Feb 25 16:40 test.s
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file test.s
+test.s: assembler source, ASCII text
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ cat test.s
+        .file   "test.c"
+        .text
+        .section        .rodata
+.LC0:
+        .string "Hello, World!"
+.LC1:
+        .string "1 + 2 = %d"
+        .text
+        .globl  main
+        .type   main, @function
+main:
+.LFB0:
+        .cfi_startproc
+        pushq   %rbp
+        .cfi_def_cfa_offset 16
+        .cfi_offset 6, -16
+        movq    %rsp, %rbp
+        .cfi_def_cfa_register 6
+        subq    $16, %rsp
+        movl    $0, -4(%rbp)
+        leaq    .LC0(%rip), %rdi
+        movl    $0, %eax
+        call    printf@PLT
+        movl    $3, -4(%rbp)
+        movl    -4(%rbp), %eax
+        movl    %eax, %esi
+        leaq    .LC1(%rip), %rdi
+        movl    $0, %eax
+        call    printf@PLT
+        movl    $0, %eax
+        leave
+        .cfi_def_cfa 7, 8
+        ret
+        .cfi_endproc
+.LFE0:
+        .size   main, .-main
+        .ident  "GCC: (Ubuntu 7.3.0-27ubuntu1~18.04) 7.3.0"
+        .section        .note.GNU-stack,"",@progbits
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ gcc -c test.s
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+total 24
+-rwxrwxrwx 1 rainy rainy    23 Feb 25 16:15 README.md
+-rwxrwxrwx 1 rainy rainy   149 Feb 25 16:39 test.c
+-rwxrwxrwx 1 rainy rainy 18006 Feb 25 16:39 test.i
+-rwxrwxrwx 1 rainy rainy  1648 Feb 25 16:41 test.o
+-rwxrwxrwx 1 rainy rainy   650 Feb 25 16:40 test.s
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file test.o
+test.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ nm test.o
+                 U _GLOBAL_OFFSET_TABLE_
+0000000000000000 T main
+                 U printf
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ objdump -x test.o
+
+test.o:     file format elf64-x86-64
+test.o
+architecture: i386:x86-64, flags 0x00000011:
+HAS_RELOC, HAS_SYMS
+start address 0x0000000000000000
+
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .text         00000044  0000000000000000  0000000000000000  00000040  2**0
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data         00000000  0000000000000000  0000000000000000  00000084  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  0000000000000000  0000000000000000  00000084  2**0
+                  ALLOC
+  3 .rodata       00000019  0000000000000000  0000000000000000  00000084  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .comment      0000002b  0000000000000000  0000000000000000  0000009d  2**0
+                  CONTENTS, READONLY
+  5 .note.GNU-stack 00000000  0000000000000000  0000000000000000  000000c8  2**0
+                  CONTENTS, READONLY
+  6 .eh_frame     00000038  0000000000000000  0000000000000000  000000c8  2**3
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, DATA
+SYMBOL TABLE:
+0000000000000000 l    df *ABS*  0000000000000000 test.c
+0000000000000000 l    d  .text  0000000000000000 .text
+0000000000000000 l    d  .data  0000000000000000 .data
+0000000000000000 l    d  .bss   0000000000000000 .bss
+0000000000000000 l    d  .rodata        0000000000000000 .rodata
+0000000000000000 l    d  .note.GNU-stack        0000000000000000 .note.GNU-stack
+0000000000000000 l    d  .eh_frame      0000000000000000 .eh_frame
+0000000000000000 l    d  .comment       0000000000000000 .comment
+0000000000000000 g     F .text  0000000000000044 main
+0000000000000000         *UND*  0000000000000000 _GLOBAL_OFFSET_TABLE_
+0000000000000000         *UND*  0000000000000000 printf
+
+
+RELOCATION RECORDS FOR [.text]:
+OFFSET           TYPE              VALUE
+0000000000000012 R_X86_64_PC32     .rodata-0x0000000000000004
+000000000000001c R_X86_64_PLT32    printf-0x0000000000000004
+000000000000002f R_X86_64_PC32     .rodata+0x000000000000000a
+0000000000000039 R_X86_64_PLT32    printf-0x0000000000000004
+
+
+RELOCATION RECORDS FOR [.eh_frame]:
+OFFSET           TYPE              VALUE
+0000000000000020 R_X86_64_PC32 
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ gcc -static -o test test.o
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+total 852
+-rwxrwxrwx 1 rainy rainy     23 Feb 25 16:15 README.md
+-rwxrwxrwx 1 rainy rainy 844736 Feb 25 16:42 test
+-rwxrwxrwx 1 rainy rainy    149 Feb 25 16:39 test.c
+-rwxrwxrwx 1 rainy rainy  18006 Feb 25 16:39 test.i
+-rwxrwxrwx 1 rainy rainy   1648 Feb 25 16:41 test.o
+-rwxrwxrwx 1 rainy rainy    650 Feb 25 16:40 test.s
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ./test
+Hello, World!
+1 + 2 = 3
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ nm test
+00000000006b9108 V DW.ref.__gcc_personality_v0
+00000000004ab26c W _.stapsdt.base
+0000000000448b40 W _Exit
+00000000006b9000 d _GLOBAL_OFFSET_TABLE_
+00000000006b9140 D _IO_2_1_stderr_
+00000000006b9580 D _IO_2_1_stdin_
+[...]
+000000000040ea60 T exit
+0000000000477d90 t expand_dynamic_string_token
+00000000004a42e0 r expected.10367
+00000000004a4300 r expected2.10366
+00000000004a42d0 r expected_note.10373
+0000000000481f50 t fatal_error
+000000000040fc80 W fclose
+0000000000449540 W fcntl
+[...]
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ objdump -x test
+
+test:     file format elf64-x86-64
+test
+architecture: i386:x86-64, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x0000000000400a30
+
+Program Header:
+    LOAD off    0x0000000000000000 vaddr 0x0000000000400000 paddr 0x0000000000400000 align 2**21
+         filesz 0x00000000000b57d6 memsz 0x00000000000b57d6 flags r-x
+    LOAD off    0x00000000000b6120 vaddr 0x00000000006b6120 paddr 0x00000000006b6120 align 2**21
+         filesz 0x00000000000051b8 memsz 0x00000000000068e0 flags rw-
+    NOTE off    0x0000000000000190 vaddr 0x0000000000400190 paddr 0x0000000000400190 align 2**2
+         filesz 0x0000000000000044 memsz 0x0000000000000044 flags r--
+     TLS off    0x00000000000b6120 vaddr 0x00000000006b6120 paddr 0x00000000006b6120 align 2**3
+         filesz 0x0000000000000020 memsz 0x0000000000000060 flags r--
+   STACK off    0x0000000000000000 vaddr 0x0000000000000000 paddr 0x0000000000000000 align 2**4
+         filesz 0x0000000000000000 memsz 0x0000000000000000 flags rw-
+   RELRO off    0x00000000000b6120 vaddr 0x00000000006b6120 paddr 0x00000000006b6120 align 2**0
+         filesz 0x0000000000002ee0 memsz 0x0000000000002ee0 flags r--
+
+Sections:
+Idx Name          Size      VMA               LMA               File off  Algn
+  0 .note.ABI-tag 00000020  0000000000400190  0000000000400190  00000190  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .note.gnu.build-id 00000024  00000000004001b0  00000000004001b0  000001b0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .rela.plt     00000228  00000000004001d8  00000000004001d8  000001d8  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .init         00000017  0000000000400400  0000000000400400  00000400  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .plt          000000b8  0000000000400418  0000000000400418  00000418  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  5 .text         0008f550  00000000004004d0  00000000004004d0  000004d0  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  6 __libc_freeres_fn 00001523  000000000048fa20  000000000048fa20  0008fa20  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  7 __libc_thread_freeres_fn 0000108f  0000000000490f50  0000000000490f50  00090f50  2**4
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  8 .fini         00000009  0000000000491fe0  0000000000491fe0  00091fe0  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  9 .rodata       0001926c  0000000000492000  0000000000492000  00092000  2**5
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 10 .stapsdt.base 00000001  00000000004ab26c  00000000004ab26c  000ab26c  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 11 .eh_frame     0000a4d8  00000000004ab270  00000000004ab270  000ab270  2**3
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 12 .gcc_except_table 0000008e  00000000004b5748  00000000004b5748  000b5748  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+ 13 .tdata        00000020  00000000006b6120  00000000006b6120  000b6120  2**3
+                  CONTENTS, ALLOC, LOAD, DATA, THREAD_LOCAL
+ 14 .tbss         00000040  00000000006b6140  00000000006b6140  000b6140  2**3
+                  ALLOC, THREAD_LOCAL
+ 15 .init_array   00000010  00000000006b6140  00000000006b6140  000b6140  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 16 .fini_array   00000010  00000000006b6150  00000000006b6150  000b6150  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 17 .data.rel.ro  00002d94  00000000006b6160  00000000006b6160  000b6160  2**5
+                  CONTENTS, ALLOC, LOAD, DATA
+ 18 .got          000000f8  00000000006b8ef8  00000000006b8ef8  000b8ef8  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 19 .got.plt      000000d0  00000000006b9000  00000000006b9000  000b9000  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 20 .data         00001af0  00000000006b90e0  00000000006b90e0  000b90e0  2**5
+                  CONTENTS, ALLOC, LOAD, DATA
+ 21 __libc_subfreeres 00000048  00000000006babd0  00000000006babd0  000babd0  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 22 __libc_IO_vtables 000006a8  00000000006bac20  00000000006bac20  000bac20  2**5
+                  CONTENTS, ALLOC, LOAD, DATA
+ 23 __libc_atexit 00000008  00000000006bb2c8  00000000006bb2c8  000bb2c8  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 24 __libc_thread_subfreeres 00000008  00000000006bb2d0  00000000006bb2d0  000bb2d0  2**3
+                  CONTENTS, ALLOC, LOAD, DATA
+ 25 .bss          000016f8  00000000006bb2e0  00000000006bb2e0  000bb2d8  2**5
+                  ALLOC
+ 26 __libc_freeres_ptrs 00000028  00000000006bc9d8  00000000006bc9d8  000bb2d8  2**3
+                  ALLOC
+ 27 .comment      0000002a  0000000000000000  0000000000000000  000bb2d8  2**0
+                  CONTENTS, READONLY
+ 28 .note.stapsdt 000014cc  0000000000000000  0000000000000000  000bb304  2**2
+                  CONTENTS, READONLY
+SYMBOL TABLE:
+0000000000400190 l    d  .note.ABI-tag  0000000000000000 .note.ABI-tag
+00000000004001b0 l    d  .note.gnu.build-id     0000000000000000 .note.gnu.build-id
+00000000004001d8 l    d  .rela.plt      0000000000000000 .rela.plt
+0000000000400400 l    d  .init  0000000000000000 .init
+0000000000400418 l    d  .plt   0000000000000000 .plt
+[...]
+0000000000492000 l    d  .rodata 
+[...]
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ldd test
+        not a dynamic executable
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ strip test
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+total 784
+-rwxrwxrwx 1 rainy rainy     23 Feb 25 16:15 README.md
+-rwxrwxrwx 1 rainy rainy 774392 Feb 25 16:43 test
+-rwxrwxrwx 1 rainy rainy    149 Feb 25 16:39 test.c
+-rwxrwxrwx 1 rainy rainy  18006 Feb 25 16:39 test.i
+-rwxrwxrwx 1 rainy rainy   1648 Feb 25 16:41 test.o
+-rwxrwxrwx 1 rainy rainy    650 Feb 25 16:40 test.s
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ nm test
+nm: test: no symbols
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ objdump -x test
+
+test:     file format elf64-x86-64
+test
+architecture: i386:x86-64, flags 0x00000102:
+EXEC_P, D_PAGED
+start address 0x0000000000400a30
+[...]
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ gcc -o test test.c
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+total 36
+-rwxrwxrwx 1 rainy rainy    23 Feb 25 16:15 README.md
+-rwxrwxrwx 1 rainy rainy  8344 Feb 25 16:44 test
+-rwxrwxrwx 1 rainy rainy   153 Feb 25 16:44 test.c
+-rwxrwxrwx 1 rainy rainy 18006 Feb 25 16:39 test.i
+-rwxrwxrwx 1 rainy rainy  1648 Feb 25 16:41 test.o
+-rwxrwxrwx 1 rainy rainy   650 Feb 25 16:40 test.s
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ldd test
+        linux-vdso.so.1 (0x00007fffe0886000)
+        libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007ff1f3c10000)
+        /lib64/ld-linux-x86-64.so.2 (0x00007ff1f4400000)
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ./test
+Hello, World!
+1 + 2 = 3
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ nm test
+0000000000200dc0 d _DYNAMIC
+0000000000200fb0 d _GLOBAL_OFFSET_TABLE_
+0000000000000750 R _IO_stdin_used
+                 w _ITM_deregisterTMCloneTable
+                 w _ITM_registerTMCloneTable
+[...]
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ objdump -x test
+
+test:     file format elf64-x86-64
+test
+architecture: i386:x86-64, flags 0x00000150:
+HAS_SYMS, DYNAMIC, D_PAGED
+start address 0x0000000000000580
+[...]
+Dynamic Section:
+  NEEDED               libc.so.6
+  INIT                 0x0000000000000528
+  FINI                 0x0000000000000744
+[...]
+Version References:
+  required from libc.so.6:
+    0x09691a75 0x00 02 GLIBC_2.2.5
+[...]
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$  gcc -v -static -o test test.c
+Using built-in specs.
+COLLECT_GCC=gcc
+COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
+OFFLOAD_TARGET_NAMES=nvptx-none
+OFFLOAD_TARGET_DEFAULT=1
+Target: x86_64-linux-gnu
+Configured with: ../src/configure -v --with-pkgversion='Ubuntu 7.3.0-27ubuntu1~18.04' --with-bugurl=file:///usr/share/doc/gcc-7/README.Bugs --enable-languages=c,ada,c++,go,brig,d,fortran,objc,obj-c++ --prefix=/usr --with-gcc-major-version-only --program-suffix=-7 --program-prefix=x86_64-linux-gnu- --enable-shared --enable-linker-build-id --libexecdir=/usr/lib --without-included-gettext --enable-threads=posix --libdir=/usr/lib --enable-nls --with-sysroot=/ --enable-clocale=gnu --enable-libstdcxx-debug --enable-libstdcxx-time=yes --with-default-libstdcxx-abi=new --enable-gnu-unique-object --disable-vtable-verify --enable-libmpx --enable-plugin --enable-default-pie --with-system-zlib --with-target-system-zlib --enable-objc-gc=auto --enable-multiarch --disable-werror --with-arch-32=i686 --with-abi=m64 --with-multilib-list=m32,m64,mx32 --enable-multilib --with-tune=generic --enable-offload-targets=nvptx-none --without-cuda-driver --enable-checking=release --build=x86_64-linux-gnu --host=x86_64-linux-gnu --target=x86_64-linux-gnu
+Thread model: posix
+gcc version 7.3.0 (Ubuntu 7.3.0-27ubuntu1~18.04)
+COLLECT_GCC_OPTIONS='-v' '-static' '-o' 'test' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/cc1 -quiet -v -imultiarch x86_64-linux-gnu test.c -quiet -dumpbase test.c -mtune=generic -march=x86-64 -auxbase test -version -fstack-protector-strong -Wformat -Wformat-security -o /tmp/ccqNLqrU.s
+GNU C11 (Ubuntu 7.3.0-27ubuntu1~18.04) version 7.3.0 (x86_64-linux-gnu)
+        compiled by GNU C version 7.3.0, GMP version 6.1.2, MPFR version 4.0.1, MPC version 1.1.0, isl version isl-0.19-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+ignoring nonexistent directory "/usr/local/include/x86_64-linux-gnu"
+ignoring nonexistent directory "/usr/lib/gcc/x86_64-linux-gnu/7/../../../../x86_64-linux-gnu/include"
+#include "..." search starts here:
+#include <...> search starts here:
+ /usr/lib/gcc/x86_64-linux-gnu/7/include
+ /usr/local/include
+ /usr/lib/gcc/x86_64-linux-gnu/7/include-fixed
+ /usr/include/x86_64-linux-gnu
+ /usr/include
+End of search list.
+GNU C11 (Ubuntu 7.3.0-27ubuntu1~18.04) version 7.3.0 (x86_64-linux-gnu)
+        compiled by GNU C version 7.3.0, GMP version 6.1.2, MPFR version 4.0.1, MPC version 1.1.0, isl version isl-0.19-GMP
+
+GGC heuristics: --param ggc-min-expand=100 --param ggc-min-heapsize=131072
+Compiler executable checksum: c8081a99abb72bbfd9129549110a350c
+COLLECT_GCC_OPTIONS='-v' '-static' '-o' 'test' '-mtune=generic' '-march=x86-64'
+ as -v --64 -o /tmp/ccaQnhlB.o /tmp/ccqNLqrU.s
+GNU assembler version 2.30 (x86_64-linux-gnu) using BFD version (GNU Binutils for Ubuntu) 2.30
+COMPILER_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/
+LIBRARY_PATH=/usr/lib/gcc/x86_64-linux-gnu/7/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib/:/lib/x86_64-linux-gnu/:/lib/../lib/:/usr/lib/x86_64-linux-gnu/:/usr/lib/../lib/:/usr/lib/gcc/x86_64-linux-gnu/7/../../../:/lib/:/usr/lib/
+COLLECT_GCC_OPTIONS='-v' '-static' '-o' 'test' '-mtune=generic' '-march=x86-64'
+ /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccciCGki.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lc --sysroot=/ --build-id -m elf_x86_64 --hash-style=gnu --as-needed -static -z relro -o test /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginT.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. /tmp/ccaQnhlB.o --start-group -lgcc -lgcc_eh -lc --end-group /usr/lib/gcc/x86_64-linux-gnu/7/crtend.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+COLLECT_GCC_OPTIONS='-v' '-static' '-o' 'test' '-mtune=generic' '-march=x86-64'
+
+
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), stripped
+rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/libgdbm.so.5.0.0
+/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/libgdbm.so.5.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=907faf37dcc147e1a1b9f9c3889c13a769bf77eb, stripped
