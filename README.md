@@ -7,7 +7,7 @@ Platforms (all using Ubuntu OS):
 - Android <br/>
   - Linux localhost 4.9.97 #1 SMP PREEMPT Sat Jan 5 12:40:52 CST 2019 aarch64 aarch64 aarch64 GNU/Linux
   - Ubuntu 18.04.2 LTS 
-  - See wiki page for reference: <br/>
+  - See the wiki page for reference: <br/>
     - https://github.com/RainySummerLuo/Compiler/wiki/Android-&-Termux-&-Ubuntu
 - Windows Subsystem for Linux (WSL)
   - Linux RAINYS-MECHREVO 4.4.0-17763-Microsoft #253-Microsoft Mon Dec 31 17:49:00 PST 2018 x86_64 x86_64 x86_64 GNU/Linux
