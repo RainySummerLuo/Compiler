@@ -1,0 +1,23 @@
+Welcome to Termux!
+
+% whoami
+u0_a683
+% bash ubuntu.sh
+skipping downloading
+writing launch script
+fixing shebang of start-ubuntu.sh
+making start-ubuntu.sh executable
+You can now launch Ubuntu with the ./start-ubuntu.sh script
+%
+% ./start-ubuntu.sh script
+Script started, file is typescript
+# whi^Hoami
+sh: 1: whoami: not found
+# whoami
+root
+# uname -r
+4.9.97
+# uname -a
+Linux localhost 4.9.97 #1 SMP PREEMPT Sat Jan 5 12:40:52 CST 2019 aarch64 aarch64 aarch64 GNU/Linux
+# cat /etc/issue
+Ubuntu 18.04.2 LTS \n \l
