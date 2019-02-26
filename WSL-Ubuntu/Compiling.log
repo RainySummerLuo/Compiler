@@ -1,5 +1,4 @@
-# C Source File -- test.c
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ cat test.c
+rainy@RAINYS-ASUS:/mnt/Compiler$ cat test.c
 #include <stdio.h>
 
 int main(void){
@@ -9,20 +8,20 @@ int main(void){
     printf("1 + 2 = %d\n", add1);
     return 0;
 }
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file test.c
+rainy@RAINYS-ASUS:/mnt/Compiler$ file test.c
 test.c: C source, ASCII text
 
+----------
 
-# Preprocessed File -- test.i
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ gcc -o test.i -E test.c
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+rainy@RAINYS-ASUS:/mnt/Compiler$ gcc -o test.i -E test.c
+rainy@RAINYS-ASUS:/mnt/Compiler$ ls -l
 total 20
 -rwxrwxrwx 1 rainy rainy    23 Feb 25 16:15 README.md
 -rwxrwxrwx 1 rainy rainy   149 Feb 25 16:17 test.c
 -rwxrwxrwx 1 rainy rainy 18006 Feb 25 16:38 test.i
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file test.i
+rainy@RAINYS-ASUS:/mnt/Compiler$ file test.i
 test.i: C source, ASCII text
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ cat test.i
+rainy@RAINYS-ASUS:/mnt/Compiler$ cat test.i
 [...]
 # 868 "/usr/include/stdio.h" 3 4
 
@@ -38,18 +37,18 @@ int main(void){
     return 0;
 }
 
+---------
 
-# Assembly File -- test.s
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ gcc -S test.i
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+rainy@RAINYS-ASUS:/mnt/Compiler$ gcc -S test.i
+rainy@RAINYS-ASUS:/mnt/Compiler$ ls -l
 total 20
 -rwxrwxrwx 1 rainy rainy    23 Feb 25 16:15 README.md
 -rwxrwxrwx 1 rainy rainy   149 Feb 25 16:39 test.c
 -rwxrwxrwx 1 rainy rainy 18006 Feb 25 16:39 test.i
 -rwxrwxrwx 1 rainy rainy   650 Feb 25 16:40 test.s
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file test.s
+rainy@RAINYS-ASUS:/mnt/Compiler$ file test.s
 test.s: assembler source, ASCII text
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ cat test.s
+rainy@RAINYS-ASUS:/mnt/Compiler$ cat test.s
         .file   "test.c"
         .text
         .section        .rodata
@@ -89,23 +88,23 @@ main:
         .ident  "GCC: (Ubuntu 7.3.0-27ubuntu1~18.04) 7.3.0"
         .section        .note.GNU-stack,"",@progbits
 
+---------
 
-# Object File -- test.o
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ gcc -c test.s
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+rainy@RAINYS-ASUS:/mnt/Compiler$ gcc -c test.s
+rainy@RAINYS-ASUS:/mnt/Compiler$ ls -l
 total 24
 -rwxrwxrwx 1 rainy rainy    23 Feb 25 16:15 README.md
 -rwxrwxrwx 1 rainy rainy   149 Feb 25 16:39 test.c
 -rwxrwxrwx 1 rainy rainy 18006 Feb 25 16:39 test.i
 -rwxrwxrwx 1 rainy rainy  1648 Feb 25 16:41 test.o
 -rwxrwxrwx 1 rainy rainy   650 Feb 25 16:40 test.s
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file test.o
+rainy@RAINYS-ASUS:/mnt/Compiler$ file test.o
 test.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), not stripped
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ nm test.o
+rainy@RAINYS-ASUS:/mnt/Compiler$ nm test.o
                  U _GLOBAL_OFFSET_TABLE_
 0000000000000000 T main
                  U printf
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ objdump -x test.o
+rainy@RAINYS-ASUS:/mnt/Compiler$ objdump -x test.o
 
 test.o:     file format elf64-x86-64
 test.o
@@ -155,12 +154,10 @@ RELOCATION RECORDS FOR [.eh_frame]:
 OFFSET           TYPE              VALUE
 0000000000000020 R_X86_64_PC32 
 
+----------
 
-# Executable File -- test
-
-# Static
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ gcc -static -o test test.o
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+rainy@RAINYS-ASUS:/mnt/Compiler$ gcc -static -o test test.o
+rainy@RAINYS-ASUS:/mnt/Compiler$ ls -l
 total 852
 -rwxrwxrwx 1 rainy rainy     23 Feb 25 16:15 README.md
 -rwxrwxrwx 1 rainy rainy 844736 Feb 25 16:42 test
@@ -168,10 +165,12 @@ total 852
 -rwxrwxrwx 1 rainy rainy  18006 Feb 25 16:39 test.i
 -rwxrwxrwx 1 rainy rainy   1648 Feb 25 16:41 test.o
 -rwxrwxrwx 1 rainy rainy    650 Feb 25 16:40 test.s
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ./test
+rainy@RAINYS-ASUS:/mnt/Compiler$ ./test
 Hello, World!
 1 + 2 = 3
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ nm test
+rainy@RAINYS-ASUS:/mnt/Compiler$ file test
+test: ELF 64-bit LSB executable, x86-64, version 1 (GNU/Linux), statically linked, for GNU/Linux 3.2.0, BuildID[sha1]=bb921796378ef3f521af7ef6acffdb089bc917fd, not stripped
+rainy@RAINYS-ASUS:/mnt/Compiler$ nm test
 00000000006b9108 V DW.ref.__gcc_personality_v0
 00000000004ab26c W _.stapsdt.base
 0000000000448b40 W _Exit
@@ -188,7 +187,7 @@ rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ nm test
 000000000040fc80 W fclose
 0000000000449540 W fcntl
 [...]
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ objdump -x test
+rainy@RAINYS-ASUS:/mnt/Compiler$ objdump -x test
 
 test:     file format elf64-x86-64
 test
@@ -279,10 +278,10 @@ SYMBOL TABLE:
 [...]
 0000000000492000 l    d  .rodata 
 [...]
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ldd test
+rainy@RAINYS-ASUS:/mnt/Compiler$ ldd test
         not a dynamic executable
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ strip test
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+rainy@RAINYS-ASUS:/mnt/Compiler$ strip test
+rainy@RAINYS-ASUS:/mnt/Compiler$ ls -l
 total 784
 -rwxrwxrwx 1 rainy rainy     23 Feb 25 16:15 README.md
 -rwxrwxrwx 1 rainy rainy 774392 Feb 25 16:43 test
@@ -290,12 +289,13 @@ total 784
 -rwxrwxrwx 1 rainy rainy  18006 Feb 25 16:39 test.i
 -rwxrwxrwx 1 rainy rainy   1648 Feb 25 16:41 test.o
 -rwxrwxrwx 1 rainy rainy    650 Feb 25 16:40 test.s
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ nm test
+rainy@RAINYS-ASUS:/mnt/Compiler$ nm test
 nm: test: no symbols
 
-# Dynamic
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ gcc -o test test.c
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ls -l
+---------
+
+rainy@RAINYS-ASUS:/mnt/Compiler$ gcc -o test test.c
+rainy@RAINYS-ASUS:/mnt/Compiler$ ls -l
 total 36
 -rwxrwxrwx 1 rainy rainy    23 Feb 25 16:15 README.md
 -rwxrwxrwx 1 rainy rainy  8344 Feb 25 16:44 test
@@ -303,21 +303,23 @@ total 36
 -rwxrwxrwx 1 rainy rainy 18006 Feb 25 16:39 test.i
 -rwxrwxrwx 1 rainy rainy  1648 Feb 25 16:41 test.o
 -rwxrwxrwx 1 rainy rainy   650 Feb 25 16:40 test.s
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ldd test
+rainy@RAINYS-ASUS:/mnt/Compiler$ file test
+test: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, for GNU/Linux 3.2.0, BuildID[sha1]=6b798e33daac59b8fda7142b2b6e9b37c29b859b, not stripped
+rainy@RAINYS-ASUS:/mnt/Compiler$ ldd test
         linux-vdso.so.1 (0x00007fffe0886000)
         libc.so.6 => /lib/x86_64-linux-gnu/libc.so.6 (0x00007ff1f3c10000)
         /lib64/ld-linux-x86-64.so.2 (0x00007ff1f4400000)
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ ./test
+rainy@RAINYS-ASUS:/mnt/Compiler$ ./test
 Hello, World!
 1 + 2 = 3
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ nm test
+rainy@RAINYS-ASUS:/mnt/Compiler$ nm test
 0000000000200dc0 d _DYNAMIC
 0000000000200fb0 d _GLOBAL_OFFSET_TABLE_
 0000000000000750 R _IO_stdin_used
                  w _ITM_deregisterTMCloneTable
                  w _ITM_registerTMCloneTable
 [...]
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ objdump -x test
+rainy@RAINYS-ASUS:/mnt/Compiler$ objdump -x test
 
 test:     file format elf64-x86-64
 test
@@ -335,9 +337,9 @@ Version References:
     0x09691a75 0x00 02 GLIBC_2.2.5
 [...]
 
+----------
 
-# Full Process of Compilation
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$  gcc -v -static -o test test.c
+rainy@RAINYS-ASUS:/mnt/Compiler$  gcc -v -static -o test test.c
 Using built-in specs.
 COLLECT_GCC=gcc
 COLLECT_LTO_WRAPPER=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper
@@ -377,9 +379,9 @@ COLLECT_GCC_OPTIONS='-v' '-static' '-o' 'test' '-mtune=generic' '-march=x86-64'
  /usr/lib/gcc/x86_64-linux-gnu/7/collect2 -plugin /usr/lib/gcc/x86_64-linux-gnu/7/liblto_plugin.so -plugin-opt=/usr/lib/gcc/x86_64-linux-gnu/7/lto-wrapper -plugin-opt=-fresolution=/tmp/ccciCGki.res -plugin-opt=-pass-through=-lgcc -plugin-opt=-pass-through=-lgcc_eh -plugin-opt=-pass-through=-lc --sysroot=/ --build-id -m elf_x86_64 --hash-style=gnu --as-needed -static -z relro -o test /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crt1.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crti.o /usr/lib/gcc/x86_64-linux-gnu/7/crtbeginT.o -L/usr/lib/gcc/x86_64-linux-gnu/7 -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu -L/usr/lib/gcc/x86_64-linux-gnu/7/../../../../lib -L/lib/x86_64-linux-gnu -L/lib/../lib -L/usr/lib/x86_64-linux-gnu -L/usr/lib/../lib -L/usr/lib/gcc/x86_64-linux-gnu/7/../../.. /tmp/ccaQnhlB.o --start-group -lgcc -lgcc_eh -lc --end-group /usr/lib/gcc/x86_64-linux-gnu/7/crtend.o /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
 COLLECT_GCC_OPTIONS='-v' '-static' '-o' 'test' '-mtune=generic' '-march=x86-64'
 
+---------
 
-# Library and Object File for Basic Functions
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
+rainy@RAINYS-ASUS:/mnt/Compiler$ file /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o
 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/crtn.o: ELF 64-bit LSB relocatable, x86-64, version 1 (SYSV), stripped
-rainy@RAINYS-ASUS:/mnt/c/Users/rainy/PROGRA~1/Compiler$ file /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/libgdbm.so.5.0.0
+rainy@RAINYS-ASUS:/mnt/Compiler$ file /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/libgdbm.so.5.0.0
 /usr/lib/gcc/x86_64-linux-gnu/7/../../../x86_64-linux-gnu/libgdbm.so.5.0.0: ELF 64-bit LSB shared object, x86-64, version 1 (SYSV), dynamically linked, BuildID[sha1]=907faf37dcc147e1a1b9f9c3889c13a769bf77eb, stripped
