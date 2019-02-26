@@ -1,0 +1,419 @@
+root@rainysummer-pi:/home/rainy/test# cat test.c
+#include "stdio.h"
+
+int main(void) {
+    printf("Hello, World!\n");
+    int add1 = 0;
+    add1 = 1 + 2;
+    printf("%d + %d = %d\n", 1, 2, add1);
+    return 0;
+}
+root@rainysummer-pi:/home/rainy/test# file test.c
+test.c: C source, ASCII text
+root@rainysummer-pi:/home/rainy/test# gcc -E test.c -o test.i
+root@rainysummer-pi:/home/rainy/test# ls -l
+total 24
+-rw-r--r-- 1 root root   162 2月  25 00:16 test.c
+-rw-r--r-- 1 root root 17771 2月  25 00:16 test.i
+root@rainysummer-pi:/home/rainy/test# file *
+test.c: C source, ASCII text
+test.i: C source, ASCII text
+root@rainysummer-pi:/home/rainy/test# cat test.i
+# 1 "test.c"
+# 1 "<built-in>"
+# 1 "<command-line>"
+# 1 "/usr/include/stdc-predef.h" 1 3 4
+# 1 "<command-line>" 2
+# 1 "test.c"
+# 1 "/usr/include/stdio.h" 1 3 4
+# 27 "/usr/include/stdio.h" 3 4
+[...]
+# 942 "/usr/include/stdio.h" 3 4
+
+# 2 "test.c" 2
+
+
+# 3 "test.c"
+int main(void) {
+    printf("Hello, World!\n");
+    int add1 = 0;
+    add1 = 1 + 2;
+    printf("%d + %d = %d\n", 1, 2, add1);
+    return 0;
+}
+
+---------
+
+root@rainysummer-pi:/home/rainy/test# gcc -S test.i
+root@rainysummer-pi:/home/rainy/test# ls -l
+total 28
+-rw-r--r-- 1 root root   162 2月  25 00:16 test.c
+-rw-r--r-- 1 root root 17771 2月  25 00:16 test.i
+-rw-r--r-- 1 root root  1047 2月  25 00:17 test.s
+root@rainysummer-pi:/home/rainy/test# file test.s
+test.s: assembler source, ASCII text
+root@rainysummer-pi:/home/rainy/test# cat test.s
+        .arch armv7-a
+        .eabi_attribute 28, 1
+        .fpu vfpv3-d16
+        .eabi_attribute 20, 1
+        .eabi_attribute 21, 1
+        .eabi_attribute 23, 3
+        .eabi_attribute 24, 1
+        .eabi_attribute 25, 1
+        .eabi_attribute 26, 2
+        .eabi_attribute 30, 6
+        .eabi_attribute 34, 1
+        .eabi_attribute 18, 4
+        .file   "test.c"
+        .section        .rodata
+        .align  2
+.LC0:
+        .ascii  "Hello, World!\000"
+        .align  2
+.LC1:
+        .ascii  "%d + %d = %d\012\000"
+        .text
+        .align  2
+        .global main
+        .syntax unified
+        .thumb
+        .thumb_func
+        .type   main, %function
+main:
+        @ args = 0, pretend = 0, frame = 8
+        @ frame_needed = 1, uses_anonymous_args = 0
+        push    {r7, lr}
+        sub     sp, sp, #8
+        add     r7, sp, #0
+        movw    r0, #:lower16:.LC0
+        movt    r0, #:upper16:.LC0
+        bl      puts
+        movs    r3, #0
+        str     r3, [r7, #4]
+        movs    r3, #3
+        str     r3, [r7, #4]
+        ldr     r3, [r7, #4]
+        movs    r2, #2
+        movs    r1, #1
+        movw    r0, #:lower16:.LC1
+        movt    r0, #:upper16:.LC1
+        bl      printf
+        movs    r3, #0
+        mov     r0, r3
+        adds    r7, r7, #8
+        mov     sp, r7
+        @ sp needed
+        pop     {r7, pc}
+        .size   main, .-main
+        .ident  "GCC: (Ubuntu/Linaro 5.4.0-6ubuntu1~16.04.4) 5.4.0 20160609"
+        .section        .note.GNU-stack,"",%progbits
+
+----------
+
+root@rainysummer-pi:/home/rainy/test# gcc -c test.s
+root@rainysummer-pi:/home/rainy/test# ls -l
+total 32
+-rw-r--r-- 1 root root   162 2月  25 00:16 test.c
+-rw-r--r-- 1 root root 17771 2月  25 00:16 test.i
+-rw-r--r-- 1 root root  1180 2月  25 00:19 test.o
+-rw-r--r-- 1 root root  1047 2月  25 00:17 test.s
+root@rainysummer-pi:/home/rainy/test# file test.o
+test.o: ELF 32-bit LSB relocatable, ARM, EABI5 version 1 (SYSV), not stripped
+root@rainysummer-pi:/home/rainy/test# nm test.o
+00000000 r .LC0
+00000010 r .LC1
+00000000 T main
+         U printf
+         U puts
+root@rainysummer-pi:/home/rainy/test# objdump -x test.o
+
+test.o:     file format elf32-littlearm
+test.o
+architecture: arm, flags 0x00000011:
+HAS_RELOC, HAS_SYMS
+start address 0x00000000
+private flags = 5000000: [Version5 EABI]
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000038  00000000  00000000  00000034  2**2
+                  CONTENTS, ALLOC, LOAD, RELOC, READONLY, CODE
+  1 .data         00000000  00000000  00000000  0000006c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000000  00000000  00000000  0000006c  2**0
+                  ALLOC
+  3 .rodata       0000001e  00000000  00000000  0000006c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  4 .comment      0000003c  00000000  00000000  0000008a  2**0
+                  CONTENTS, READONLY
+  5 .note.GNU-stack 00000000  00000000  00000000  000000c6  2**0
+                  CONTENTS, READONLY
+  6 .ARM.attributes 00000033  00000000  00000000  000000c6  2**0
+                  CONTENTS, READONLY
+SYMBOL TABLE:
+00000000 l    df *ABS*  00000000 test.c
+00000000 l    d  .text  00000000 .text
+00000000 l    d  .data  00000000 .data
+00000000 l    d  .bss   00000000 .bss
+00000000 l    d  .rodata        00000000 .rodata
+00000000 l       .rodata        00000000 .LC0
+00000010 l       .rodata        00000000 .LC1
+00000000 l    d  .note.GNU-stack        00000000 .note.GNU-stack
+00000000 l    d  .comment       00000000 .comment
+00000000 l    d  .ARM.attributes        00000000 .ARM.attributes
+00000000 g     F .text  00000036 main
+00000000         *UND*  00000000 puts
+00000000         *UND*  00000000 printf
+
+
+RELOCATION RECORDS FOR [.text]:
+OFFSET   TYPE              VALUE
+00000006 R_ARM_THM_MOVW_ABS_NC  .LC0
+0000000a R_ARM_THM_MOVT_ABS  .LC0
+0000000e R_ARM_THM_CALL    puts
+00000020 R_ARM_THM_MOVW_ABS_NC  .LC1
+00000024 R_ARM_THM_MOVT_ABS  .LC1
+00000028 R_ARM_THM_CALL    printf
+
+----------
+
+root@rainysummer-pi:/home/rainy/test# gcc -static -o test test.o
+root@rainysummer-pi:/home/rainy/test# ls -l
+total 472
+-rwxr-xr-x 1 root root 449516 2月  25 00:20 test
+-rw-r--r-- 1 root root    162 2月  25 00:16 test.c
+-rw-r--r-- 1 root root  17771 2月  25 00:16 test.i
+-rw-r--r-- 1 root root   1180 2月  25 00:19 test.o
+-rw-r--r-- 1 root root   1047 2月  25 00:17 test.s
+root@rainysummer-pi:/home/rainy/test# ./test
+Hello, World!
+1 + 2 = 3
+root@rainysummer-pi:/home/rainy/test# file test
+test: ELF 32-bit LSB executable, ARM, EABI5 version 1 (GNU/Linux), statically linked, for GNU/Linux 3.2.0, BuildID[sha1]=356ab0cf5d56dc1eda2dc6edcce77d31abf1932a, not stripped
+root@rainysummer-pi:/home/rainy/test# nm test
+00013bb8 T abort
+000791a8 B __abort_msg
+00039fc0 W access
+00039fc0 T __access
+0002459c t add_alias2.isra.1.part.2
+[...]
+root@rainysummer-pi:/home/rainy/test# objdump -x test
+
+test:     file format elf32-littlearm
+test
+architecture: arm, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x00010385
+
+Program Header:
+0x70000001 off    0x000576e4 vaddr 0x000676e4 paddr 0x000676e4 align 2**2
+         filesz 0x00000680 memsz 0x00000680 flags r--
+    LOAD off    0x00000000 vaddr 0x00010000 paddr 0x00010000 align 2**16
+         filesz 0x00057d68 memsz 0x00057d68 flags r-x
+    LOAD off    0x00057f6c vaddr 0x00077f6c paddr 0x00077f6c align 2**16
+         filesz 0x00000f64 memsz 0x00001b0c flags rw-
+    NOTE off    0x00000114 vaddr 0x00010114 paddr 0x00010114 align 2**2
+         filesz 0x00000044 memsz 0x00000044 flags r--
+     TLS off    0x00057f6c vaddr 0x00077f6c paddr 0x00077f6c align 2**2
+         filesz 0x00000010 memsz 0x00000028 flags r--
+   STACK off    0x00000000 vaddr 0x00000000 paddr 0x00000000 align 2**4
+         filesz 0x00000000 memsz 0x00000000 flags rw-
+   RELRO off    0x00057f6c vaddr 0x00077f6c paddr 0x00077f6c align 2**0
+         filesz 0x00000094 memsz 0x00000094 flags r--
+private flags = 5000400: [Version5 EABI] [hard-float ABI]
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .note.ABI-tag 00000020  00010114  00010114  00000114  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .note.gnu.build-id 00000024  00010134  00010134  00000134  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .rel.dyn      00000008  00010158  00010158  00000158  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  3 .init         0000000c  00010160  00010160  00000160  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  4 .iplt         00000010  0001016c  0001016c  0000016c  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  5 .text         000420d0  00010180  00010180  00000180  2**6
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  [...]
+
+SYMBOL TABLE:
+00010114 l    d  .note.ABI-tag  00000000 .note.ABI-tag
+00010134 l    d  .note.gnu.build-id     00000000 .note.gnu.build-id
+00010158 l    d  .rel.dyn       00000000 .rel.dyn
+00010160 l    d  .init  00000000 .init
+0001016c l    d  .iplt  00000000 .iplt
+00010180 l    d  .text  00000000 .text
+[...]
+
+root@rainysummer-pi:/home/rainy/test# ldd test
+        not a dynamic executable
+root@rainysummer-pi:/home/rainy/test# strip test
+root@rainysummer-pi:/home/rainy/test# ls -l
+total 396
+-rwxr-xr-x 1 root root 368704 2月  25 00:27 test
+-rw-r--r-- 1 root root    162 2月  25 00:16 test.c
+-rw-r--r-- 1 root root  17771 2月  25 00:16 test.i
+-rw-r--r-- 1 root root   1180 2月  25 00:19 test.o
+-rw-r--r-- 1 root root   1047 2月  25 00:17 test.s
+root@rainysummer-pi:/home/rainy/test# nm test
+nm: test: no symbols
+
+----------
+
+root@rainysummer-pi:/home/rainy/test# gcc -o test test.c
+root@rainysummer-pi:/home/rainy/test# ldd tets
+ldd: ./tets: No such file or directory
+root@rainysummer-pi:/home/rainy/test# ldd test
+        linux-vdso.so.1 =>  (0x7e93e000)
+        /usr/lib/arm-linux-gnueabihf/libarmmem.so (0x76fd2000)
+        libc.so.6 => /lib/arm-linux-gnueabihf/libc.so.6 (0x76ecd000)
+        /lib/ld-linux-armhf.so.3 (0x54aed000)
+root@rainysummer-pi:/home/rainy/test# ls -l
+total 44
+-rwxr-xr-x 1 root root  8224 2月  25 00:28 test
+-rw-r--r-- 1 root root   162 2月  25 00:16 test.c
+-rw-r--r-- 1 root root 17771 2月  25 00:16 test.i
+-rw-r--r-- 1 root root  1180 2月  25 00:19 test.o
+-rw-r--r-- 1 root root  1047 2月  25 00:17 test.s
+root@rainysummer-pi:/home/rainy/test# nm test
+         U abort@@GLIBC_2.4
+00021030 B __bss_end__
+00021030 B _bss_end__
+0002102c B __bss_start
+0002102c B __bss_start__
+00010374 t call_weak_fn
+0002102c b completed.9907
+00021024 D __data_start
+00021024 W data_start
+00010398 t deregister_tm_clones
+000103e8 t __do_global_dtors_aux
+00020f10 t __do_global_dtors_aux_fini_array_entry
+00021028 D __dso_handle
+00020f18 d _DYNAMIC
+0002102c D _edata
+00021030 B _end
+00021030 B __end__
+0001049c T _fini
+00010400 t frame_dummy
+00020f0c t __frame_dummy_init_array_entry
+000104d0 r __FRAME_END__
+00021000 d _GLOBAL_OFFSET_TABLE_
+         w __gmon_start__
+000102e8 T _init
+00020f10 t __init_array_end
+00020f0c t __init_array_start
+000104a4 R _IO_stdin_used
+         w _ITM_deregisterTMCloneTable
+         w _ITM_registerTMCloneTable
+00020f14 d __JCR_END__
+00020f14 d __JCR_LIST__
+         w _Jv_RegisterClasses
+00010498 T __libc_csu_fini
+0001045c T __libc_csu_init
+         U __libc_start_main@@GLIBC_2.4
+00010424 T main
+         U printf@@GLIBC_2.4
+         U puts@@GLIBC_2.4
+000103bc t register_tm_clones
+00010344 T _start
+0002102c D __TMC_END__
+root@rainysummer-pi:/home/rainy/test# objdump -x test
+
+test:     file format elf32-littlearm
+test
+architecture: arm, flags 0x00000112:
+EXEC_P, HAS_SYMS, D_PAGED
+start address 0x00010345
+
+Program Header:
+0x70000001 off    0x000004c8 vaddr 0x000104c8 paddr 0x000104c8 align 2**2
+         filesz 0x00000008 memsz 0x00000008 flags r--
+    PHDR off    0x00000034 vaddr 0x00010034 paddr 0x00010034 align 2**2
+         filesz 0x00000120 memsz 0x00000120 flags r-x
+  INTERP off    0x00000154 vaddr 0x00010154 paddr 0x00010154 align 2**0
+         filesz 0x00000019 memsz 0x00000019 flags r--
+    LOAD off    0x00000000 vaddr 0x00010000 paddr 0x00010000 align 2**16
+         filesz 0x000004d4 memsz 0x000004d4 flags r-x
+    LOAD off    0x00000f0c vaddr 0x00020f0c paddr 0x00020f0c align 2**16
+         filesz 0x00000120 memsz 0x00000124 flags rw-
+ DYNAMIC off    0x00000f18 vaddr 0x00020f18 paddr 0x00020f18 align 2**2
+         filesz 0x000000e8 memsz 0x000000e8 flags rw-
+    NOTE off    0x00000170 vaddr 0x00010170 paddr 0x00010170 align 2**2
+         filesz 0x00000044 memsz 0x00000044 flags r--
+   STACK off    0x00000000 vaddr 0x00000000 paddr 0x00000000 align 2**4
+         filesz 0x00000000 memsz 0x00000000 flags rw-
+   RELRO off    0x00000f0c vaddr 0x00020f0c paddr 0x00020f0c align 2**0
+         filesz 0x000000f4 memsz 0x000000f4 flags r--
+
+Dynamic Section:
+  NEEDED               libc.so.6
+  INIT                 0x000102e8
+  FINI                 0x0001049c
+  INIT_ARRAY           0x00020f0c
+  INIT_ARRAYSZ         0x00000004
+  FINI_ARRAY           0x00020f10
+  FINI_ARRAYSZ         0x00000004
+  GNU_HASH             0x000101b4
+  STRTAB               0x00010244
+  SYMTAB               0x000101e4
+  STRSZ                0x00000048
+  SYMENT               0x00000010
+  DEBUG                0x00000000
+  PLTGOT               0x00021000
+  PLTRELSZ             0x00000028
+  PLTREL               0x00000011
+  JMPREL               0x000102c0
+  REL                  0x000102b8
+  RELSZ                0x00000008
+  RELENT               0x00000008
+  VERNEED              0x00010298
+  VERNEEDNUM           0x00000001
+  VERSYM               0x0001028c
+
+Version References:
+  required from libc.so.6:
+    0x0d696914 0x00 02 GLIBC_2.4
+private flags = 5000400: [Version5 EABI] [hard-float ABI]
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .interp       00000019  00010154  00010154  00000154  2**0
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  1 .note.ABI-tag 00000020  00010170  00010170  00000170  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  2 .note.gnu.build-id 00000024  00010190  00010190  00000190  2**2
+                  CONTENTS, ALLOC, LOAD, READONLY, DATA
+  [...]
+
+SYMBOL TABLE:
+00010154 l    d  .interp        00000000              .interp
+00010170 l    d  .note.ABI-tag  00000000              .note.ABI-tag
+00010190 l    d  .note.gnu.build-id     00000000              .note.gnu.build-id
+000101b4 l    d  .gnu.hash      00000000              .gnu.hash
+[...]
+
+root@rainysummer-pi:/home/rainy/test# ldd test
+        linux-vdso.so.1 =>  (0x7edce000)
+        /usr/lib/arm-linux-gnueabihf/libarmmem.so (0x76fbb000)
+        libc.so.6 => /lib/arm-linux-gnueabihf/libc.so.6 (0x76eb6000)
+        /lib/ld-linux-armhf.so.3 (0x54ab4000)
+root@rainysummer-pi:/home/rainy/test# strip test
+root@rainysummer-pi:/home/rainy/test# ls -l
+total 40
+-rwxr-xr-x 1 root root  5620 2月  25 00:29 test
+-rw-r--r-- 1 root root   162 2月  25 00:16 test.c
+-rw-r--r-- 1 root root 17771 2月  25 00:16 test.i
+-rw-r--r-- 1 root root  1180 2月  25 00:19 test.o
+-rw-r--r-- 1 root root  1047 2月  25 00:17 test.s
+root@rainysummer-pi:/home/rainy/test# nm test
+nm: test: no symbols
+
+----------
+
+root@rainysummer-pi:/home/rainy/test# file /usr/lib/gcc/arm-linux-gnueabihf/5/../../../arm-linux-gnueabihf/libgomp.so.1.0.0
+/usr/lib/gcc/arm-linux-gnueabihf/5/../../../arm-linux-gnueabihf/libgomp.so.1.0.0: ELF 32-bit LSB shared object, ARM, EABI5 version 1 (SYSV), dynamically linked, BuildID[sha1]=ad27cdfef0a0e2af71e47b93afcd69934748e26c, stripped
+root@rainysummer-pi:/home/rainy/test# file /usr/lib/gcc/arm-linux-gnueabihf/5/../../../arm-linux-gnueabihf/libc.a
+/usr/lib/gcc/arm-linux-gnueabihf/5/../../../arm-linux-gnueabihf/libc.a: current ar archive
