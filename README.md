@@ -1,6 +1,6 @@
 # Compiler
 ## Ch1. Introduction to Compilers
-Platforms (all using Ubuntu OS): 
+Platforms (all running Ubuntu OS): 
 - Raspberry Pi 3B <br/>
   - Linux rainysummer-pi 4.4.38-v7+ #938 SMP Thu Dec 15 15:22:21 GMT 2016 armv7l armv7l armv7l GNU/Linux
   - Ubuntu 16.04.2 LTS
