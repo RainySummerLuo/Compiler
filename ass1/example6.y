@@ -1,8 +1,7 @@
 %{
+#define YYSTYPE char *
 #include <stdio.h>
 #include <string.h>
-
-#define YYSTYPE char *
 
 int yydebug=0;
 
