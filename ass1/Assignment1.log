@@ -1,0 +1,96 @@
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# lex example.l
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# cc lex.yy.c -o example1 -ll
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# ./example1
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# ./example1
+st artstartst1artsstoppjlk
+st artStart command received
+st1artsStop command received
+pjlk
+
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# ./example1
+start start stop
+Start command received
+ Start command received
+ Stop command received
+
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# lex example2.l
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# cc lex.yy.c -o example2 -ll
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# ./example2
+ab12
+WORD
+
+12ab
+NUMBER
+WORD
+
+a12b
+WORD
+
+dWORD
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# lex example3.l
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# cc lex.yy.c -o example3 -ll
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# ./example3
+}" x{-/-; }}
+EBRACE QUOTE WORD OBRACE FILENAME SEMICOLON EBRACE EBRACE
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# lex example4.l
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# yacc -d example4.y
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# cc lex.yy.c y.tab.c -o example4
+example4.y:15:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+ main()
+ ^~~~
+example4.y: In function ‘main’:
+example4.y:17:2: warning: implicit declaration of function ‘yyparse’ [-Wimplicit-function-declaration]
+  yyparse();
+  ^~~~~~~
+y.tab.c: In function ‘yyparse’:
+y.tab.c:1140:16: warning: implicit declaration of function ‘yylex’ [-Wimplicit-function-declaration]
+       yychar = yylex ();
+                ^~~~~
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# ./example4
+heat on
+    Heat turned on or off
+target temperature 17
+    Temperature set
+target temperature -17
+-   Temperature set
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# lex example5.l
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# yacc -d example5.y
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# cc lex.yy.c y.tab.c -o example5
+example5.y:15:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+ main()
+ ^~~~
+example5.y: In function ‘main’:
+example5.y:17:2: warning: implicit declaration of function ‘yyparse’ [-Wimplicit-function-declaration]
+  yyparse();
+  ^~~~~~~
+y.tab.c: In function ‘yyparse’:
+y.tab.c:1140:16: warning: implicit declaration of function ‘yylex’ [-Wimplicit-function-declaration]
+       yychar = yylex ();
+                ^~~~~
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# ./example5
+target temperature 17
+    Temperature set to 17
+heat off
+    Heat turned off
+het
+het
+heat on
+    Heat turned on
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# lex example6.l
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# yacc -d example6.y
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# cc lex.yy.c y.tab.c -o example6
+example6.y:18:1: warning: return type defaults to ‘int’ [-Wimplicit-int]
+ main()
+ ^~~~
+example6.y: In function ‘main’:
+example6.y:20:2: warning: implicit declaration of function ‘yyparse’ [-Wimplicit-function-declaration]
+  yyparse();
+  ^~~~~~~
+y.tab.c: In function ‘yyparse’:
+y.tab.c:1163:16: warning: implicit declaration of function ‘yylex’ [-Wimplicit-function-declaration]
+       yychar = yylex ();
+                ^~~~~
+root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# ./example6
+zone "foo/bar"{file "bar-foo"; foo; type hint; "foo/bar"; file "foo";};
+A zonefile name 'bar-foo' was encountered
+error: syntax error
