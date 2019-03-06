@@ -13,4 +13,4 @@ Platforms (all running Ubuntu OS):
   - Linux RAINYS-MECHREVO 4.4.0-17763-Microsoft #253-Microsoft Mon Dec 31 17:49:00 PST 2018 x86_64 x86_64 x86_64 GNU/Linux
   - Ubuntu 18.04.2 LTS
   
-## Ch2. 
+## Ass1. Lex (or Flex) and YACC (or Bison)
