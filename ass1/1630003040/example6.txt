@@ -1,0 +1,13 @@
+---------------------------------------
+6A) What is the output?
+A zonefile name 'bar-foo' was encountered
+error: syntax error
+---------------------------------------
+6B) Explain why.
+As the parser finds the match of "FILETOK quotedname", in which "quotedname" is defined as "QUOTE FILENAME QUOTE", it takes the value of the string inside quotes, the "FILENAME", as stores it in '$2'. Then when prints out "A zonefile name '%s' was encountered\n" in the "zonestatement" command, the value in '$2' is used and prints, so it prints "A zonefile name 'bar-foo' was encountered".
+And next, "zonestatements" is defined as "zonestatements zonestatement SEMICOLON", and "zonestatement" is "statements" except the case of "FILETOK quotedname" above. And "statement" is defined as "WORD" or "block" or "quotedname".
+The error is that the FILENAME should have "." or "/" in them, and the "foo-bar" have not.
+---------------------------------------
+6C) What do you think about the quality of the error handling of your program?
+The error handling is too simple as it focus on only few kinds of error and do not give hints about what and where the error is. It is confusing as debuging, people trying to locate and correct the error in code.
+---------------------------------------

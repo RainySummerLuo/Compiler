@@ -1,0 +1,8 @@
+---------------------------------------
+4A) What is the output?
+    Temperature set
+-   Temperature set
+---------------------------------------
+4B) Explain why in details, for each line of output.
+The output is a result of lexer and parser working together. In lexer's part, the input stream is divide into tokens as "NUMBER", "TOKHEAT", "STATE", etc. And the parser recognize the pattern of tokens as "TOKHEAT STATE" and "TOKTARGET TOKTEMPERATURE NUMBER". As the input given matches the pattern of "TOKTARGET TOKTEMPERATURE NUMBER", the parser takes the corresponding "target_set" command, as prints "\tTemperature set\n", as the lexer only recognize numer as that formed purely with numbers, the "-" is not recognized and remained.
+---------------------------------------

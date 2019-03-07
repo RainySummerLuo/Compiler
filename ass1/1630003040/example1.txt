@@ -1,0 +1,23 @@
+---------------------------------------
+1A) What is the output from the lexer? 
+st artStart command received
+st1artsStop command received
+pjlk
+
+---------------------------------------
+1B) Explain why the output looks like this. 
+Because the lexer recognizes the "stop" and "start", as it takes the input stream and sees the groups of characters that match with these keys, it prints "Stop command received\n" and "Start command received\n" respectively. However, when it meets input with no match with the keys, it return back those streams. It is not coded to recognize space(" ") though, so it does not recognize "st art".
+So when it reads the "start" and "stop" in the input stream, it replace them with the printf output streams, and keep other character as unchanged and prints back.
+---------------------------------------
+1C) What is the output from the lexer?
+Start command received
+ Start command received
+ Stop command received
+
+---------------------------------------
+1D) Why are some of the lines indented by one space character?
+Because they are the spaces between the words in the input stream. The lexer match "start" and "stop" and replace with respective printf stream. The spaces are left behind and returned after the printf.
+---------------------------------------
+1E) Why is there an empty line at the bottom of the output? 
+Becase the printf contents have new line character "\n" at their end, and the first printf output at the new lines produced by the previous printf. The last new line remains with no afterward output.
+---------------------------------------

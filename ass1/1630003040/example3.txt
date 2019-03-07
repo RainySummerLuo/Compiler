@@ -1,0 +1,8 @@
+---------------------------------------
+3A) What is the output?
+EBRACE QUOTE WORD OBRACE FILENAME SEMICOLON EBRACE EBRACE
+---------------------------------------
+3B) Such a configuration file is obviously not grammatically correct, but
+the lexer still accepts the input and does not generate any error. Why?
+It only recognizes individual stream or characters as symbols, filename and words. It do not consider the grammar such that a "OBRACE" must comes with a "EBRACE" to end.
+---------------------------------------

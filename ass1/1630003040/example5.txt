@@ -1,0 +1,15 @@
+---------------------------------------
+5A) Show the result.
+        Temperature set to 17
+        Heat turned off
+        Heat turned on
+---------------------------------------
+5B) Explain in detail how the two characters "17" from the input are
+processed by the lexer and parser to be finally printed by the parser as an
+integer.
+When lexer matches a target, it stores the text of the match into the string 'yytext'. Then in the code we convert the string into integer using the function atoi() (ascii to integer). And it stores the integer into the variable called 'yylval', which will be where parser expects to find values coming from the lexer. 
+By this way, the lexer reads the string of characters "17", and puts it in 'yytext', then convert it by atoi(yytext) and store the integer value into 'yyval'. Then the parser reads the pattern "TOKTARGET TOKTEMPERATURE NUMBER", it prints "\tTemperature set to %d\n", with the value in $3, as from 'yyval'.
+That's how the two characters "17" from the input are
+processed by the lexer and parser to be finally printed by the parser as an
+integer.
+---------------------------------------

@@ -47,8 +47,6 @@ y.tab.c:1140:16: warning: implicit declaration of function ‘yylex’ [-Wimplic
        yychar = yylex ();
                 ^~~~~
 root@RAINYS-MECHREVO:/mnt/c/Users/rainy/Programming/Compiler/ass1# ./example4
-heat on
-    Heat turned on or off
 target temperature 17
     Temperature set
 target temperature -17

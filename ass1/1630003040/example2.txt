@@ -1,0 +1,15 @@
+---------------------------------------
+2A) What is the output from the lexer:
+WORD
+
+NUMBER
+WORD
+
+WORD
+
+---------------------------------------
+2B) Explain why the output looks like this (including the empty lines).
+This lexer implements the regular expressions to recognize patterns in input stream.
+the "[0123456789]+" recognizes stream with purely numbers (one or more), and "[a-zA-Z][a-zA-Z0-9]*" recognizes the stream that starts with one letter and follows with the commbination of either letters or numbers or both. So "ab12" and "a12b" are recognized as "WORD" and "12ab" is "NUMBER" and "WORD".
+The empty lines are because the new-line after each input, with the "\n" at the end of the printf.
+---------------------------------------
