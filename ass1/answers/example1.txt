@@ -1,0 +1,34 @@
+1A) What is the output from the lexer? 
+st artStart command received
+st1artsStop command received
+pjlk
+
+1B) Explain why the output looks like this. 
+Because 
+
+1C) What is the output from the lexer?
+1D) Why are some of the lines indented by one space character?
+1E) Why is there an empty line at the bottom of the output? 
+
+2A) What is the output from the lexer:
+
+2B) Explain why the output looks like this (including the empty lines).
+
+3A) What is the output?
+
+3B) Such a configuration file is obviously not grammatically correct, but
+the lexer still accepts the input and does not generate any error. Why?
+
+4A) Give the following input to the program:
+
+4B) Explain why in details, for each line of output.
+
+5A) Give the following input to the program:
+
+5B) Explain in detail how the two characters "17" from the input are
+processed by the lexer and parser to be finally printed by the parser as an
+integer.
+
+6A) What is the output?
+6B) Explain why.
+6C) What do you think about the quality of the error handling of your program?
