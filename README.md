@@ -12,5 +12,15 @@ Platforms (all running Ubuntu OS):
 - Windows Subsystem for Linux (WSL)
   - Linux RAINYS-MECHREVO 4.4.0-17763-Microsoft #253-Microsoft Mon Dec 31 17:49:00 PST 2018 x86_64 x86_64 x86_64 GNU/Linux
   - Ubuntu 18.04.2 LTS
-  
+
+## Ch2. Lexical Analysis
+
 ## Ass1. Lex (or Flex) and YACC (or Bison)
+
+## Ch3. Syntax Analysis
+
+## Ass2. From Regular Expression to Deterministic Finite Automaton
+
+## Ch4. Syntax Analysis (continued)
+
+## Ass3. A (Recursive) Predictive Parser
