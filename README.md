@@ -24,3 +24,7 @@ Platforms (all running Ubuntu OS):
 ## Ch4. Syntax Analysis (continued)
 
 ## Ass3. A (Recursive) Predictive Parser
+
+## Ch4.  Syntax Directed Translation, Semantic Analysis, Type Checking
+
+## Ass4. A (Non-Recursive) Predictive Parser
