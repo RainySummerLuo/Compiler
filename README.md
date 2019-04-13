@@ -11,7 +11,7 @@ Platforms (all running Ubuntu OS):
 - Raspberry Pi 3B <br/>
   - Linux rainysummer-pi 4.4.38-v7+ #938 SMP Thu Dec 15 15:22:21 GMT 2016 armv7l armv7l armv7l GNU/Linux
   - Ubuntu 16.04.2 LTS
-- Android (Termux)<br/>
+- Android (Termux) <br/>
   - Linux localhost 4.9.97 #1 SMP PREEMPT Sat Jan 5 12:40:52 CST 2019 aarch64 aarch64 aarch64 GNU/Linux
   - Ubuntu 18.04.2 LTS 
   - See the wiki page for reference: <br/>
