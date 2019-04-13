@@ -1,4 +1,8 @@
 # Compiler
+
+Textbook
+- Dragon Book: [Compilers: Principles, Techniques, and Tools (2nd Edition)](./Compilers%20Principles%20Techniques%20and%20Tools%20(2nd%20Edition).pdf)
+
 ## Ch1. Introduction to Compilers
 Platforms (all running Ubuntu OS): 
 - Raspberry Pi 3B <br/>
