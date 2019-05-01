@@ -10,39 +10,64 @@ Consider the following context-free grammar for a small programming language:
 
 ```
 B -> { L }
-L -> D ; L L -> S ; L L -> eps
+
+L -> D ; L 
+L -> S ; L 
+L -> eps
+
 D -> INT ID = E
-S -> IF ( E ) B ELSE B S -> ID = E
+
+S -> IF ( E ) B ELSE B 
+S -> ID = E
+
 E -> T E'
-E' -> + T E' E' -> eps
+E' -> + T E' 
+E' -> eps
+
 T -> F T'
-T' -> * F T' T' -> eps
-F -> ( E ) F -> ID F -> NUM
+
+T' -> * F T' 
+T' -> eps
+
+F -> ( E ) 
+F -> ID 
+F -> NUM
 ```
 
 where `{`, `}`, `;`, `INT`, `ID`, `=`, `IF`, `(`, `)`, `ELSE`, `+`, `*`, and `NUM` are tokens, and `eps` represents the empty string epsilon. `B` is the start symbol of the grammar and represents a block of code, between curly braces. A block of code is then a list `L` of definitions and statements, in any order. A definition `D` is simply the definition of an integer variable which is initialized using an arithmetic expression `E`. A statement `S` is either an `IF` statement (with one block of code for the "then" part and one block of code for the "else" part) or the assignment of an arithmetic expression `E` to a variable. Arithmetic expressions follow the same grammar that we have used in class (except for the extra production `F -> NUM`, where `NUM` is a token representing a natural number). 
 
-1. For each nonterminal in the grammar above we define an attribute called 'time' which represents the maximum amount of time necessary for a computer to execute the corresponding code, expressed as a number of clock cycles. To simplify things, tokens and epsilon do not have such a 'time' attribute. 
+---
 
-   For each grammar production in the grammar above, write an attribute computation rule that computes the value of the 'time' attribute for the corresponding nonterminal. Your rules should be based on the following assumptions: 
-   - reading a number takes one clock cycle; 
-    - reading a variable (using the variable's value in an expression) takes one clock cycle; 
-    - writing a variable (using an assignment to the variable's name) takes one clock cycle; 
-    - allocating memory for a new integer variable takes one clock cycle; 
-    - doing an addition takes one clock cycle; 
-    - doing a multiplication takes two clock cycles; 
-    - testing whether the value of an expression is true or false and making a decision based on the result of the test takes a total of one clock cycle. 
+1. 
 
-   Also give a clear explanation in English of each rule, explaining why you wrote the rule you way you did. 
+   ```
+   B.time := L.time 
+   L.time := S.time + L.time 
+   L.time := 0 
+   D.time := E.time + 1 
+   S.time := E.time + B.time+1 
+   S.time := 1 + E.time 
+   E.time := T.time + E'.time 
+   E'.time := 1+T.time + E'.time 
+   E'.time := 0 
+   T.time := F.time + T'.time 
+   T'.time := 2 + F.time + T'.time  
+   T'.time := 0 
+   F.time := E.time 
+   F.time := 1 
+   F.time := 1 
+   ```
 
-2. Is the 'time' attribute synthesized or inherited? Explain why. 
 
-3. Write the parse tree for the following program: 
-   ``` {int x = y * 3;}```
+2. 
 
-   then compute the value of the 'time' attribute for all the nonterminals in the parse tree. 
+   The 'time' attribute is inherited.
 
-   What is then the maximum running time of that program? 
+   Because information of 'time' attribute does not flow from the RHS of the grammar production to its LHS, but instead information flows between symbols of the RHS, therefore the 'time' is not synthesized, rather it is inherited.
+
+3.  
+
+   ![syntax_tree (assets/syntax_tree (1).png)](../../../../Downloads/syntax_tree (1).png)
 
 4. How would you modify the attribute computation rules of Question 1 to compute the minimum running time of a program? 
 
