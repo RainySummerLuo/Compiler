@@ -40,23 +40,33 @@ where `{`, `}`, `;`, `INT`, `ID`, `=`, `IF`, `(`, `)`, `ELSE`, `+`, `*`, and `NU
 
 1. 
 
-   ```
-   B.time := L.time 
-   L.time := S.time + L.time 
-   L.time := 0 
-   D.time := E.time + 1 
-   S.time := E.time + B.time+1 
-   S.time := 1 + E.time 
-   E.time := T.time + E'.time 
-   E'.time := 1+T.time + E'.time 
-   E'.time := 0 
-   T.time := F.time + T'.time 
-   T'.time := 2 + F.time + T'.time  
-   T'.time := 0 
-   F.time := E.time 
-   F.time := 1 
-   F.time := 1 
-   ```
+  As defined, tokens and epsilon do not have such a ’time’ attribute, and reading a number / variable takes 1 clock cycle.  Allocating memory for a new integer variable also takes one clock cycle.
+
+  Therefore:
+
+  ```
+  B.time := L.time 
+  
+  L.time := S.time + L.time 
+  L.time := 0 
+  
+  D.time := E.time + 1 
+  
+  S.time := E.time + B.time+1 
+  S.time := 1 + E.time 
+  
+  E.time := T.time + E'.time 
+  E'.time := 1+T.time + E'.time 
+  E'.time := 0 
+  
+  T.time := F.time + T'.time 
+  T'.time := 2 + F.time + T'.time  
+  T'.time := 0 
+  
+  F.time := E.time 
+  F.time := 1 
+  F.time := 1 
+  ```
 
 
 2. 
